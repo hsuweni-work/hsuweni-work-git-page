@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>[實作記錄] Laravel 9 的 test coverage 測試覆蓋率，sail 環境的調整 - Hsu Weni Work</title>
+  </head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Hsu Weni Work</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">[實作記錄] Laravel 9 的 test coverage 測試覆蓋率，sail 環境的調整</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1655253914000"
+                  >2022-06-15 08:45</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1655255515000"
+                  >2022-06-15 09:11</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">laravel</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>日期：2022-06-15 ( 三 )</p>
+<hr />
+<p>建立一個新的 Laravel 9 專案</p>
+<p><code>curl -s "https://laravel.build/l9-2022061501" | bash</code></p>
+<p>拷貝別的專案的 docker-compose.yml 和 .env 過來</p>
+<p>啟動 sail 環境</p>
+<p><code>sail up -d</code></p>
+<hr />
+<p>進行測試</p>
+<p><code>sail artisan test</code></p>
+<p><img src="/_resources/5495968f72f24605a2f4b5df3e959cd8." /></p>
+<hr />
+<p>查看 test 參數提示</p>
+<p><code>sail artisan test --help</code></p>
+<p><img src="/_resources/d6823e3a7c8d430189b177bd899fb1ba." /></p>
+<hr />
+<p>進行測試覆蓋率</p>
+<p><code>sail artisan test --coverage</code></p>
+<p>出現環境設定問題</p>
+<p>ERROR  Code coverage driver not available. Did you set Xdebug’s coverage mode?
+<a title="https://xdebug.org/docs/code_coverage#mode" href="https://xdebug.org/docs/code_coverage#mode">https://xdebug.org/docs/code_coverage#mode</a></p>
+<p><img src="/_resources/2f0f0d72bc3d4095ba78f9c1d2644ed8." /></p>
+<hr />
+<p>先關閉 sail 環境</p>
+<p><code>sail stop</code></p>
+<p><img src="/_resources/f228ab84bbcc4d0cabde2fffa1e01a18." /></p>
+<p>修改 .env 檔案，再最後加入以下</p>
+<p><code>SAIL_XDEBUG_MODE=develop,debug,coverage</code></p>
+<p>重新啟動 sail 環境</p>
+<p><code>sail up -d</code></p>
+<p><img src="/_resources/eb7e651b425b428596cd55a7721e395f." /></p>
+<p>可以測試覆蓋率了</p>
+<p><code>sail artisan test --coverage</code></p>
+<p><img src="/_resources/06fe44b16f054cd4a75dac4903305d47." /></p>
+<p>設定覆蓋率最少要 80</p>
+<p><code>sail artisan test --coverage --min=80</code></p>
+<p><img src="/_resources/ed772a997faf439e9a4837a0471e0c5f." /></p>
+<p><img src="/_resources/3c61d5575e404628850ecbb24c4adcf6." /></p>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

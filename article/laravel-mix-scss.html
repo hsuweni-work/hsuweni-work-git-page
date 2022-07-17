@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Laravel Mix 編譯大量 SCSS 檔案 - Hsu Weni Work</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Hsu Weni Work</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Laravel Mix 編譯大量 SCSS 檔案</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1653622086000"
+                  >2022-05-27 11:28</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1653628216000"
+                  >2022-05-27 13:10</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>日期：2022-05-27 ( 五 )</p>
+<hr />
+<p>這是購買的樣版樣式原始檔 resources/admin/scss
+<a title="https://designrevision.com/demo/shards-dashboards/" href="https://designrevision.com/demo/shards-dashboards/">https://designrevision.com/demo/shards-dashboards/</a></p>
+<p><img src="/_resources/0c7179e000884a7ab5dacbeca05aeda6." /></p>
+<p>經過編譯後在 public</p>
+<p><img src="/_resources/d8369a9513f34e6ab9ad52e3e4407a92." /></p>
+<p>把字型註解掉
+resources/assets/admin/scss/templates/_print-preview.scss</p>
+<p><img src="/_resources/bcf061e4b55c4d6491e2d005ae1406c3." /></p>
+<p>可以看到 _print-preview.scss 是由 dashboards.scss 所引入
+resources/assets/admin/scss/dashboards.scss</p>
+<p><img src="/_resources/97a136793c5e4f5c98ddd5349e2704d3." /></p>
+<hr />
+<p>處理 Webpack</p>
+<p>原本的 webpack config 設定檔沒變
+webpack.config.js</p>
+<p><img src="/_resources/73af6a84136447529f8b90bb2ac7b8ce." /></p>
+<p>在 mix 檔案中，加入以下，主要是掃描 resources/admin/scss 所有檔案進行編譯
+webpack.mix.js</p>
+<p><img src="/_resources/8041b0df04614a93aa470168334bdc3a." />
+<img src="/_resources/9599e13d37c14a45a04c7191ae8baf91." /></p>
+<p>Code 如下</p>
+<div><pre class="hljs"><code><span class="hljs-keyword">function</span> find<span class="hljs-constructor">Files(<span class="hljs-params">dir</span>)</span> {
+    const fs = require('fs');
+    return fs.readdir<span class="hljs-constructor">Sync(<span class="hljs-params">dir</span>)</span>.filter(file =&gt; {
+        return fs.stat<span class="hljs-constructor">Sync(`${<span class="hljs-params">dir</span>}<span class="hljs-operator">/</span>${<span class="hljs-params">file</span>}`)</span>.is<span class="hljs-constructor">File()</span>;
+    });
+}
+<span class="hljs-keyword">function</span> build<span class="hljs-constructor">Sass(<span class="hljs-params">dir</span>, <span class="hljs-params">dest</span>)</span> {
+    find<span class="hljs-constructor">Files(<span class="hljs-params">dir</span>)</span>.<span class="hljs-keyword">for</span><span class="hljs-constructor">Each(<span class="hljs-params">function</span> (<span class="hljs-params">file</span>)</span> {
+        <span class="hljs-keyword">if</span> ( ! file.starts<span class="hljs-constructor">With('<span class="hljs-params">_</span>')</span>) {
+            mix.sass(dir + <span class="hljs-character">'/'</span> + file, dest);
+        }
+    });
+}
+build<span class="hljs-constructor">Sass('<span class="hljs-params">resources</span><span class="hljs-operator">/</span><span class="hljs-params">assets</span><span class="hljs-operator">/</span><span class="hljs-params">admin</span><span class="hljs-operator">/</span><span class="hljs-params">scss</span>', '<span class="hljs-params">public</span><span class="hljs-operator">/</span><span class="hljs-params">css</span>')</span>;</code></pre></div>
+<p>執行編譯</p>
+<p><code>docker exec -ti moi-gov_web_1 sh -c 'npm run prod'</code></p>
+<p><img src="/_resources/9a0fc08957ee4565a782dc239ee7b0f0." /></p>
+<p><img src="/_resources/76d062d36fb743a9a61f77db55b0d6b5." /></p>
+<p>確定編譯過的 CSS 沒有原本的字型了</p>
+<p><img src="/_resources/7683606dee3949b5ab8aa813328b484f." /></p>
+<p>兩個樣版都有引入</p>
+<p><img src="/_resources/257f608ee5a342b4ad38692df167357a." /></p>
+<hr />
+<p>參考</p>
+<p>Compiling Assets (Mix) - Sass
+<a title="https://laravel.com/docs/9.x/mix#sass" href="https://laravel.com/docs/9.x/mix#sass">https://laravel.com/docs/9.x/mix#sass</a></p>
+<p>Sass Preprocessing
+<a title="https://laravel-mix.com/docs/6.0/sass" href="https://laravel-mix.com/docs/6.0/sass">https://laravel-mix.com/docs/6.0/sass</a></p>
+<p>⚠️ 我是參考這個修改
+Laravel 5.4 Mix: how to compile all .scss files in the folder in one css file.</p>
+<p><a title="https://laracasts.com/discuss/channels/laravel/laravel-54-mix-how-to-compile-all-scss-files-in-the-folder-in-one-css-file" href="https://laracasts.com/discuss/channels/laravel/laravel-54-mix-how-to-compile-all-scss-files-in-the-folder-in-one-css-file">https://laracasts.com/discuss/channels/laravel/laravel-54-mix-how-to-compile-all-scss-files-in-the-folder-in-one-css-file</a></p>
+<p>How to combine SASS/SCSS files and CSS files into a single CSS file in laravel mix?</p>
+<p><a title="https://stackoverflow.com/questions/64272622/how-to-combine-sass-scss-files-and-css-files-into-a-single-css-file-in-laravel-m" href="https://stackoverflow.com/questions/64272622/how-to-combine-sass-scss-files-and-css-files-into-a-single-css-file-in-laravel-m">https://stackoverflow.com/questions/64272622/how-to-combine-sass-scss-files-and-css-files-into-a-single-css-file-in-laravel-m</a></p>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

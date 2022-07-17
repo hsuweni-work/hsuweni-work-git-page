@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Laravel 的Facade、Service Provider 實作及解釋 - Hsu Weni Work</title>
+  </head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Hsu Weni Work</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Laravel 的Facade、Service Provider 實作及解釋</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1641882886000"
+                  >2022-01-11 14:34</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1641886662000"
+                  >2022-01-11 15:37</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">laravel</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>日期：2022-11-11 ( 二 )</p>
+<hr />
+<p>建立一個路由 test，指向 TestController 的 index 方法</p>
+<p>routes/web.php</p>
+<p><img src="/_resources/97bdf42af3404b38a13b70e6314a7f90." /></p>
+<p><img src="/_resources/6340bc99826a465ea799e92a30aac7e5." /></p>
+<p>建立 Controller，這裡假設為 TestController</p>
+<p><code>sail artisan make:controller TestController --resource</code></p>
+<p>app/Http/Controllers/TestController.php</p>
+<p><img src="/_resources/0043734e121f423489b94af15bdb23a1." /></p>
+<p><img src="/_resources/3f414decc30d4f059fd32fb17587b309." /></p>
+<p>建立一個自訂義工具，如 Tools/ToString，這個工具預期它會在很多 Controller 中使用</p>
+<p>app/Tools/ToString.php</p>
+<p><img src="/_resources/4cac971e4f2442cf8894557016c7e277." /></p>
+<p><img src="/_resources/24ecbaee708a4419982d4dad96800461." /></p>
+<p>回到 Controller 中，傳統上使用方式會是像下面這樣，先實例化後再呼叫方法</p>
+<p><img src="/_resources/c61c3998cf8c4dada6cc6b1a67f9e9c9." /></p>
+<p><img src="/_resources/12fdec6a6a664c139b930d4e917e480d." /></p>
+<hr />
+<p><strong>重點是這裡 !!!</strong></p>
+<p>可以透過 Facade 方式，在每一個 Controller 中使用類似靜態方法的方式呼叫它</p>
+<p>藉由 Facade 呼叫 Service Provider 幫忙實例化自訂義的 Service Tools</p>
+<hr />
+<p>建立一個 Service Provider</p>
+<p><code>sail artisan make:provider ToolServiceProvider</code></p>
+<p>app/Providers/ToolServiceProvider.php</p>
+<p><img src="/_resources/56ebf21c97a04ecb97572a6960020bb8." /></p>
+<p>然後在裡面的 register 中使用 singleton 方式用別名註冊，並返回剛剛自訂義工具 Tools/ToString</p>
+<p><img src="/_resources/1ebd1a77f7d64407ae4270e364d2eed6." /></p>
+<p>然後再建立一個 Facade 類，這個沒有 artisan 工具可以用，手動建立</p>
+<p>app/Facades/ToString.php</p>
+<p><img src="/_resources/af2f235f66e44605aa716122839adcc2." /></p>
+<p>需要繼承 Facade 然後實作 getracjadeaccessor 方法，返回在 Service Provider 中設定的別名</p>
+<p><img src="/_resources/4c3b3f707e98410caf62582efc19ada2." /></p>
+<p>上面回傳的 toString 是 Service 中指定的別名</p>
+<p>透過 Server Provider 實例化 Tools/ToString 物件</p>
+<p><img src="/_resources/744459111d8147f7b2bc1d44489ce3d3." /></p>
+<p>最後在 config 中的 providers 中註冊 Service Provider</p>
+<p>config/app.php</p>
+<p><img src="/_resources/f739d157a856451494680b87e7753a3f." /></p>
+<p><img src="/_resources/5fb99a3dadd94252a0d9d034c2d0b381." /></p>
+<p>在別名 aliases 中設定剛剛新增的 Facades</p>
+<p><img src="/_resources/b8dae32dd529447e9e2a39c6f584e858." /></p>
+<p><img src="/_resources/b6dc6689f2034c04bff2ccb1dc8a60e5." /></p>
+<p>然後回到 Controller 中，呼叫 ToString ( Facade )</p>
+<p><img src="/_resources/8c7d630eff7f45509883bf362e374452." /></p>
+<p>執行結果</p>
+<p><img src="/_resources/55160fa603cc4bceb04ff5cf38d22526." /></p>
+<hr />
+<p>不推薦做法</p>
+<p>不要在 Controller 中註冊，而是統一在 config/app.php 中註冊</p>
+<p><code>App::register("App\Providers\ToolServiceProvider");</code></p>
+<p><img src="/_resources/ee28caebc3944b53abce491b9bfe13f2." /></p>
+<hr />
+<p>參考</p>
+<p>Laravel 5 的 Facade、Service Provider 之一知半解</p>
+<p><a title="https://www.youtube.com/watch?v=sXvTKlZuW4M&amp;ab_channel=%E8%B6%99%E6%89%BF%E7%91%8B" href="https://www.youtube.com/watch?v=sXvTKlZuW4M&amp;ab_channel=%E8%B6%99%E6%89%BF%E7%91%8B">https://www.youtube.com/watch?v=sXvTKlZuW4M&amp;ab_channel=趙承瑋</a></p>
+<p>Facades
+<a title="https://laravel.com/docs/8.x/facades#how-facades-work" href="https://laravel.com/docs/8.x/facades#how-facades-work">https://laravel.com/docs/8.x/facades#how-facades-work</a></p>
+<p>Laravel - Facades
+<a title="https://www.tutorialspoint.com/laravel/laravel_facades.htm" href="https://www.tutorialspoint.com/laravel/laravel_facades.htm">https://www.tutorialspoint.com/laravel/laravel_facades.htm</a></p>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

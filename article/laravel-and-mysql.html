@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Laravel &amp; MySQL 基本的外鍵設定觀念 - Hsu Weni Work</title>
+  </head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Hsu Weni Work</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Laravel &amp; MySQL 基本的外鍵設定觀念</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1653963830000"
+                  >2022-05-31 10:23</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1653964454000"
+                  >2022-05-31 10:34</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>日期：2022-05-31 ( 二 )</p>
+<hr />
+<p>建立一個新的 migration 並執行後，出現外鍵格式錯誤警告</p>
+<p><img src="/_resources/9e277783f247404d9c01928429ce3ebd." /></p>
+<p>SQLSTATE[HY000]: General error: 1005 Can’t create table <code>db_name</code>.<code>form_permission</code> (errno: 150 “Foreign key constraint is incorrectly formed”) (SQL: alter table <code>form_permission</code> add constraint <code>form_permission_form_id_foreign</code> fore</p>
+<p>ign key (<code>form_id</code>) references <code>form</code> (<code>id</code>) on delete cascade on update cascade)</p>
+<p>解決方法：</p>
+<p>新的 migration 中所設定的 foreign key 型別要和原本的 table 欄位型別一致</p>
+<p><img src="/_resources/530ebe2a33a54af3872ece540ba04ec9." /></p>
+<p>修改後再執行一次就可以了</p>
+<p>這是建立後的外鍵設定值</p>
+<p><img src="/_resources/f75f576bf0a3411287cc6fa718447eca." /></p>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

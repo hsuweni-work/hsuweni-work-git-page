@@ -4,7 +4,7 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Sun, 17 Jul 2022 06:35:12 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 17 Jul 2022 06:41:17 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
         <item>
@@ -92,6 +92,42 @@ Fast-forward
 ]]></content:encoded>
         </item>
         <item>
+            <title><![CDATA[[教學] 在 Laravel 中使用 UUID]]></title>
+            <guid>5db9ef0fccc441b2b1a39a3c2b06809d</guid>
+            <pubDate>Thu, 07 Jul 2022 01:17:41 GMT</pubDate>
+            <content:encoded><![CDATA[<p>日期：2022-07-07 ( 四 )</p>
+<hr />
+<p>How to use UUID as Primary key instead of auto-increment IDs in Laravel application?</p>
+<p><a title="https://www.youtube.com/watch?v=1XIMI5kOPuc&amp;ab_channel=QiroLab" href="https://www.youtube.com/watch?v=1XIMI5kOPuc&amp;ab_channel=QiroLab">https://www.youtube.com/watch?v=1XIMI5kOPuc&amp;ab_channel=QiroLab</a></p>
+<p>在 Laravel 7 中使用 UUID
+<a title="https://learnku.com/laravel/t/44937" href="https://learnku.com/laravel/t/44937">https://learnku.com/laravel/t/44937</a></p>
+<p>How to use UUIDs instead of auto-increment IDs in your Laravel app</p>
+<p><a title="https://emymbenoun.medium.com/how-to-use-uuids-instead-of-auto-increment-ids-in-your-laravel-app-2e6cc045f6c1" href="https://emymbenoun.medium.com/how-to-use-uuids-instead-of-auto-increment-ids-in-your-laravel-app-2e6cc045f6c1">https://emymbenoun.medium.com/how-to-use-uuids-instead-of-auto-increment-ids-in-your-laravel-app-2e6cc045f6c1</a></p>
+<p>UUID as primary key type?
+<a title="https://laracasts.com/discuss/channels/laravel/uuid-as-primary-key-type" href="https://laracasts.com/discuss/channels/laravel/uuid-as-primary-key-type">https://laracasts.com/discuss/channels/laravel/uuid-as-primary-key-type</a></p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[[教學] Laravel Model 資料表單數複數]]></title>
+            <guid>ed886899c67b4886aff6067531f00031</guid>
+            <pubDate>Wed, 29 Jun 2022 00:55:21 GMT</pubDate>
+            <content:encoded><![CDATA[<p>日期：2022-06-29 ( 三 )</p>
+<hr />
+<p>建立一個 Model 包含 migration 時</p>
+<p><code>sail artisan make:model BlogPost -m</code></p>
+<p>產生的 migration 中，會發現 Laravel 會建立一張 blog_posts 資料表</p>
+<p><img src="/_resources/ce844b7063744550afac33abb3d7fad2." /></p>
+<p>關鍵字</p>
+<p>laravel Disable pluralization</p>
+<p><a title="https://github.com/krlove/eloquent-model-generator/issues/47" href="https://github.com/krlove/eloquent-model-generator/issues/47">https://github.com/krlove/eloquent-model-generator/issues/47</a></p>
+<p><a title="https://laracasts.com/discuss/channels/eloquent/laravel-table-names-are-plural-by-default" href="https://laracasts.com/discuss/channels/eloquent/laravel-table-names-are-plural-by-default">https://laracasts.com/discuss/channels/eloquent/laravel-table-names-are-plural-by-default</a></p>
+<p><a title="https://stackoverflow.com/questions/46668700/disable-laravel-pluralization-for-person-to-people" href="https://stackoverflow.com/questions/46668700/disable-laravel-pluralization-for-person-to-people">https://stackoverflow.com/questions/46668700/disable-laravel-pluralization-for-person-to-people</a></p>
+<p><a title="https://www.796t.com/post/OXkyYzg=.html" href="https://www.796t.com/post/OXkyYzg=.html">https://www.796t.com/post/OXkyYzg=.html</a></p>
+<p>如果真的有需要停用 Laravel 自動翻譯的複數表名的話</p>
+<p><img src="/_resources/c2220e8468b44e968e0b3db717721737." /></p>
+]]></content:encoded>
+        </item>
+        <item>
             <title><![CDATA[[實作記錄] Laravel Telescope]]></title>
             <guid>bf09170b9b0b4068971c0e483cd9bb5f</guid>
             <pubDate>Mon, 27 Jun 2022 04:44:13 GMT</pubDate>
@@ -171,6 +207,19 @@ Laravel TOP Memory Requests: Filter from Telescope JSON Fields
 ]]></content:encoded>
         </item>
         <item>
+            <title><![CDATA[📺 Laracasts 可以看的免費影片]]></title>
+            <guid>e80aeb8095944a6eb73c4237d3bb6dab</guid>
+            <pubDate>Wed, 22 Jun 2022 08:23:56 GMT</pubDate>
+            <content:encoded><![CDATA[<p>日期：2022-06-22 ( 三 )</p>
+<hr />
+<p>Laravel 8 From Scratch
+<a title="https://laracasts.com/series/laravel-8-from-scratch" href="https://laracasts.com/series/laravel-8-from-scratch">https://laracasts.com/series/laravel-8-from-scratch</a></p>
+<p>Laracasts 的作者錄的影片 ( ⚠️ 要多看幾次，並實記錄 )
+Laravel 9 - Everything You Need to Know (In 45 Minutes)
+<a title="https://www.youtube.com/watch?v=GwunZ5sH2P8" href="https://www.youtube.com/watch?v=GwunZ5sH2P8">https://www.youtube.com/watch?v=GwunZ5sH2P8</a></p>
+]]></content:encoded>
+        </item>
+        <item>
             <title><![CDATA[[開發] 匯入大量資料到 sail 開發環境中，分別使用 MySQL 及 PhpMyAdmin 方式]]></title>
             <guid>84896ecff13349668828ed7a9b2b87e6</guid>
             <pubDate>Wed, 22 Jun 2022 01:39:03 GMT</pubDate>
@@ -244,6 +293,68 @@ Laravel TOP Memory Requests: Filter from Telescope JSON Fields
 <p><img src="/_resources/4087c6624c3b47abb84f433137012a92." /></p>
 <p>所以還是照之前的 start, stop 參數</p>
 <p>然後要清除孤立容器 orphan containers 時，再另外用參數處理</p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[[實作記錄] Laravel 9 的 test coverage 測試覆蓋率，sail 環境的調整]]></title>
+            <guid>da276273133b4da683af1a14acb80a6f</guid>
+            <pubDate>Wed, 15 Jun 2022 00:45:14 GMT</pubDate>
+            <content:encoded><![CDATA[<p>日期：2022-06-15 ( 三 )</p>
+<hr />
+<p>建立一個新的 Laravel 9 專案</p>
+<p><code>curl -s "https://laravel.build/l9-2022061501" | bash</code></p>
+<p>拷貝別的專案的 docker-compose.yml 和 .env 過來</p>
+<p>啟動 sail 環境</p>
+<p><code>sail up -d</code></p>
+<hr />
+<p>進行測試</p>
+<p><code>sail artisan test</code></p>
+<p><img src="/_resources/5495968f72f24605a2f4b5df3e959cd8." /></p>
+<hr />
+<p>查看 test 參數提示</p>
+<p><code>sail artisan test --help</code></p>
+<p><img src="/_resources/d6823e3a7c8d430189b177bd899fb1ba." /></p>
+<hr />
+<p>進行測試覆蓋率</p>
+<p><code>sail artisan test --coverage</code></p>
+<p>出現環境設定問題</p>
+<p>ERROR  Code coverage driver not available. Did you set Xdebug’s coverage mode?
+<a title="https://xdebug.org/docs/code_coverage#mode" href="https://xdebug.org/docs/code_coverage#mode">https://xdebug.org/docs/code_coverage#mode</a></p>
+<p><img src="/_resources/2f0f0d72bc3d4095ba78f9c1d2644ed8." /></p>
+<hr />
+<p>先關閉 sail 環境</p>
+<p><code>sail stop</code></p>
+<p><img src="/_resources/f228ab84bbcc4d0cabde2fffa1e01a18." /></p>
+<p>修改 .env 檔案，再最後加入以下</p>
+<p><code>SAIL_XDEBUG_MODE=develop,debug,coverage</code></p>
+<p>重新啟動 sail 環境</p>
+<p><code>sail up -d</code></p>
+<p><img src="/_resources/eb7e651b425b428596cd55a7721e395f." /></p>
+<p>可以測試覆蓋率了</p>
+<p><code>sail artisan test --coverage</code></p>
+<p><img src="/_resources/06fe44b16f054cd4a75dac4903305d47." /></p>
+<p>設定覆蓋率最少要 80</p>
+<p><code>sail artisan test --coverage --min=80</code></p>
+<p><img src="/_resources/ed772a997faf439e9a4837a0471e0c5f." /></p>
+<p><img src="/_resources/3c61d5575e404628850ecbb24c4adcf6." /></p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Laravel & MySQL 基本的外鍵設定觀念]]></title>
+            <guid>b7285937c45c4d48a3f6aab83ec50369</guid>
+            <pubDate>Tue, 31 May 2022 02:23:50 GMT</pubDate>
+            <content:encoded><![CDATA[<p>日期：2022-05-31 ( 二 )</p>
+<hr />
+<p>建立一個新的 migration 並執行後，出現外鍵格式錯誤警告</p>
+<p><img src="/_resources/9e277783f247404d9c01928429ce3ebd." /></p>
+<p>SQLSTATE[HY000]: General error: 1005 Can’t create table <code>db_name</code>.<code>form_permission</code> (errno: 150 “Foreign key constraint is incorrectly formed”) (SQL: alter table <code>form_permission</code> add constraint <code>form_permission_form_id_foreign</code> fore</p>
+<p>ign key (<code>form_id</code>) references <code>form</code> (<code>id</code>) on delete cascade on update cascade)</p>
+<p>解決方法：</p>
+<p>新的 migration 中所設定的 foreign key 型別要和原本的 table 欄位型別一致</p>
+<p><img src="/_resources/530ebe2a33a54af3872ece540ba04ec9." /></p>
+<p>修改後再執行一次就可以了</p>
+<p>這是建立後的外鍵設定值</p>
+<p><img src="/_resources/f75f576bf0a3411287cc6fa718447eca." /></p>
 ]]></content:encoded>
         </item>
     </channel>

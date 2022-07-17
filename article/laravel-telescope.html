@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>[實作記錄] Laravel Telescope - Hsu Weni Work</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Hsu Weni Work</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">[實作記錄] Laravel Telescope</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1656305053000"
+                  >2022-06-27 12:44</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1657950978572"
+                  >2022-07-16 13:56</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>日期：2022-06-28 ( 三 )</p>
+<p>Laravel Telescope 是本地 Laravel 開發環境的絕佳伴侶</p>
+<p>Telescope 可以深入了解進入應用程序的請求、異常、日誌條目、數據庫查詢、排隊作業、郵件、通知、緩存操作、計劃任務、變量轉儲等</p>
+<p>官網說明文件
+<a title="https://laravel.com/docs/9.x/telescope" href="https://laravel.com/docs/9.x/telescope">https://laravel.com/docs/9.x/telescope</a></p>
+<p>這裡是說用 Telescope 來 Debug API，因為 Debug Toolbar 無法在 API 中使用 ( POSTMAN )
+Debug Eloquent Queries from API: Laravel Telescope
+<a title="https://www.youtube.com/watch?v=SR3RzIfeozI" href="https://www.youtube.com/watch?v=SR3RzIfeozI">https://www.youtube.com/watch?v=SR3RzIfeozI</a></p>
+<hr />
+<p>建立一個新的 Laravel 專案後，會有 5 張表</p>
+<p><img src="/_resources/5707f7bf5b37455f985e96b6709539d2." /></p>
+<p>安裝套件本地開發端</p>
+<p><code>sail composer require laravel/telescope --dev</code></p>
+<p><img src="/_resources/c3a1244c0242440f891f7e4d94bfb0af." /></p>
+<p>安裝到專案</p>
+<p><code>sail artisan telescope:install</code></p>
+<p><img src="/_resources/77060948e0ba43cdaa7ee5105ae1061f." /></p>
+<p>執行 migrate</p>
+<p><code>sail artisan migrate</code></p>
+<p><img src="/_resources/831e4ed6b2ec45929d25a10b43160444." /></p>
+<p>會多出 3 張表</p>
+<p><img src="/_resources/3641db7261be4aa88f93c4245e61ca1a." /></p>
+<p>註冊
+app/Providers/AppServiceProvider.php</p>
+<p><img src="/_resources/5d6e18983cfa451aa62f0d1dadfee611." /></p>
+<p>設定不要自動發現
+composer.json</p>
+<p><img src="/_resources/ac173b2fb2f7424cb1d777f4d5999b9e." /></p>
+<p>設定檔
+config/telescope.php</p>
+<p><img src="/_resources/3a001ef0311842c7a92a43894b78087e." /></p>
+<hr />
+<p>透過 Web 模式進行觀看
+<a title="http://localhost/telescope" href="http://localhost/telescope">http://localhost/telescope</a></p>
+<p><img src="/_resources/43232eed6dfe48d5bd8aaad6333ee33c." /></p>
+<p>之後的每一個請求，不管是 Web, API 都會記錄</p>
+<p><img src="/_resources/152bf6473f454c42a1961d9a54f3b8d0." /></p>
+<p>每一筆請求都有詳細的記錄</p>
+<p><img src="/_resources/e63968d21ed2415eaed0e1631ff944d4." /></p>
+<p><br class="jop-noMdConv" /><br class="jop-noMdConv" /></p>
+<hr />
+<h2 id="在-tinker-中排序-telescope-結果">在 Tinker 中排序 Telescope 結果</h2>
+<p>因為 Telescope 介面沒有排序功能，參考以下影片
+Laravel TOP Memory Requests: Filter from Telescope JSON Fields
+<a title="https://www.youtube.com/watch?v=wDKTCN_cJrU" href="https://www.youtube.com/watch?v=wDKTCN_cJrU">https://www.youtube.com/watch?v=wDKTCN_cJrU</a></p>
+<p>進入 Tinker 中，使用指令方式排序</p>
+<div><pre class="hljs"><code>\<span class="hljs-type">Laravel</span>\<span class="hljs-type">Telescope</span>\<span class="hljs-type">Storage</span>\<span class="hljs-type">EntryModel</span>::select(<span class="hljs-symbol">'content</span>-&gt;uri', <span class="hljs-symbol">'content</span>-&gt;memory')-&gt;<span class="hljs-keyword">where</span>(<span class="hljs-symbol">'type'</span>, <span class="hljs-symbol">'request'</span>)-&gt;orderByRaw(<span class="hljs-string">"cast(content-&gt;'$.memory' as unsigned) desc"</span>)-&gt;get<span class="hljs-literal">()</span>;</code></pre></div>
+<p><img src="/_resources/8ee3c028fdab49d2bceeec46855579e9.png" /></p>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

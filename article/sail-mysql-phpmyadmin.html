@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>[開發] 匯入大量資料到 sail 開發環境中，分別使用 MySQL 及 PhpMyAdmin 方式 - Hsu Weni Work</title>
+  </head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Hsu Weni Work</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">[開發] 匯入大量資料到 sail 開發環境中，分別使用 MySQL 及 PhpMyAdmin 方式</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1655861943000"
+                  >2022-06-22 09:39</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1655889057000"
+                  >2022-06-22 17:10</time
+                ></span
+              >
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>日期：2022-06-22 ( 三 )</p>
+<hr />
+<p>發現 Laravel Pagination 在正式機環境中故障，但只有正式機有完整資料，足夠產生分頁的資料數量</p>
+<p><img src="/_resources/3c492e08467341a581f75fa42dac8436." /></p>
+<p>因為開發環境的 Seeder 只有 2 筆，看不到分頁</p>
+<hr />
+<p><strong>方法 1：使用 SAIL MySQL 方式匯入</strong></p>
+<p>要使用這個方法的前提是，兩邊資料庫名稱要一致</p>
+<p>可以使用 reset 還原所有 migration</p>
+<p><code>sail artisan migration:reset</code></p>
+<p>但 migrations 這張資料表要手動刪除</p>
+<p>或是直接刪除所有資料表 ( 推薦 )</p>
+<p><code>sail artisan db:wipe</code></p>
+<p>留下空的資料庫</p>
+<p><img src="/_resources/14c125769a354dfeb3f09a1418362443." /></p>
+<p>使用 sail mysql 指令匯入完整資料庫</p>
+<p><code>sail mysql -u sail -p password moi-gov-test &lt; ~/Desktop/__hicloud_moi_gov-2022_06_21_15_04_07-dump.sql</code></p>
+<p><img src="/_resources/e2a5ba11125041c698eb66fb62643ff5." /></p>
+<p>刷新，確認有成功匯入</p>
+<p><img src="/_resources/2c111bc043fa4d08a2902cf9015f5c7b." /></p>
+<hr />
+<p><strong>方法 2：使用加裝的 PhpMyAdmin 方式匯入</strong></p>
+<p>原本加裝的 phpmyadmin 只允許匯入 100 MB 的檔案大小</p>
+<p><img src="/_resources/1af5cf21c5734263b5672c9ce7b1ffe8." /></p>
+<p>但由正式機匯出的檔案有 469 MB</p>
+<p><img src="/_resources/4533da95eccb42de96af3f9f3171b168." /></p>
+<p>修改 phpmyadmin 允許上傳的大小</p>
+<p><img src="/_resources/933648c224a44041abe06bcc9d7fe4f0." /></p>
+<p>先把 sail 環境 down 掉，然後修改 phpmyadmin 允許上傳 1000 MB，重啟 sail 環境，進入 phpmyadmin</p>
+<p><img src="/_resources/37ba52fe7ecf43c2b6bae81442c7f01c." /></p>
+<p>匯入成功了</p>
+<p><img src="/_resources/f5fda544e42246db87f09ded10c20aaa." /></p>
+<p>可以在本機環境重現完整的資料量，看到故障的 Pagination 了</p>
+<p><img src="/_resources/3c492e08467341a581f75fa42dac8436." /></p>
+<hr />
+<p>⚠️ 注意 sail 中，並沒有 mysqldump 指令</p>
+<p><code>sail --help</code></p>
+<p>跟資料庫有關的就 mysql, mariadb, sql, redis 指令</p>
+<p><img src="/_resources/2a712264746648bba7d1f9c8fddca8fa." />
+<img src="/_resources/88d8fdc501d54c769db67ae14b3e2672." /></p>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

@@ -4,7 +4,7 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Sun, 17 Jul 2022 06:26:18 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 17 Jul 2022 06:35:12 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
         <item>
@@ -143,6 +143,107 @@ Laravel TOP Memory Requests: Filter from Telescope JSON Fields
 <p>進入 Tinker 中，使用指令方式排序</p>
 <div><pre class="hljs"><code>\<span class="hljs-type">Laravel</span>\<span class="hljs-type">Telescope</span>\<span class="hljs-type">Storage</span>\<span class="hljs-type">EntryModel</span>::select(<span class="hljs-symbol">'content</span>-&gt;uri', <span class="hljs-symbol">'content</span>-&gt;memory')-&gt;<span class="hljs-keyword">where</span>(<span class="hljs-symbol">'type'</span>, <span class="hljs-symbol">'request'</span>)-&gt;orderByRaw(<span class="hljs-string">"cast(content-&gt;'$.memory' as unsigned) desc"</span>)-&gt;get<span class="hljs-literal">()</span>;</code></pre></div>
 <p><img src="/_resources/8ee3c028fdab49d2bceeec46855579e9.png" /></p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Sail 環境中，針對 MySQL Container 給 sail 用戶權限]]></title>
+            <guid>d82adbfd7f3e43af9c59723047f4eea9</guid>
+            <pubDate>Mon, 27 Jun 2022 02:24:53 GMT</pubDate>
+            <content:encoded><![CDATA[<p>日期：2022-06-27 ( 一 )</p>
+<p>正常來講 Sail 環境中裡的 MySQL 容器，裡面有一個 sail 用戶，只能操作自己的資料庫，無法新增其它資料庫，或更名資料庫等操作</p>
+<hr />
+<p>查看專案目前使用的 container</p>
+<p><img src="/_resources/19979a342bbf40bca69ee281a6a3931f." /></p>
+<p>進入 mysql 那個 container</p>
+<p><code>docker-compose exec mysql bash</code></p>
+<p><img src="/_resources/1b89229fcb4e49499f79493258bc2617." /></p>
+<p>參考 .env 設定檔</p>
+<p><img src="/_resources/a7fd80b675994335a976e876c981ff06." /></p>
+<p>猜測 root 和 sail 用戶的密碼都一樣為 .env 所設定的 password</p>
+<p><code>mysql -u root -p</code></p>
+<p><img src="/_resources/0376271763a74fabbd16df9bb078c8c3." /></p>
+<p>給 sail 用戶所有權限</p>
+<p><code>GRANT ALL PRIVILEGES ON *.* TO 'sail'@'%';</code></p>
+<p>刷新權限</p>
+<p><code>FLUSH PRIVILEGES;</code></p>
+<p>然後登出</p>
+<p>再使用 PHPMyAdmin 就可以進行資料庫新增、更名的動作了</p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[[開發] 匯入大量資料到 sail 開發環境中，分別使用 MySQL 及 PhpMyAdmin 方式]]></title>
+            <guid>84896ecff13349668828ed7a9b2b87e6</guid>
+            <pubDate>Wed, 22 Jun 2022 01:39:03 GMT</pubDate>
+            <content:encoded><![CDATA[<p>日期：2022-06-22 ( 三 )</p>
+<hr />
+<p>發現 Laravel Pagination 在正式機環境中故障，但只有正式機有完整資料，足夠產生分頁的資料數量</p>
+<p><img src="/_resources/3c492e08467341a581f75fa42dac8436." /></p>
+<p>因為開發環境的 Seeder 只有 2 筆，看不到分頁</p>
+<hr />
+<p><strong>方法 1：使用 SAIL MySQL 方式匯入</strong></p>
+<p>要使用這個方法的前提是，兩邊資料庫名稱要一致</p>
+<p>可以使用 reset 還原所有 migration</p>
+<p><code>sail artisan migration:reset</code></p>
+<p>但 migrations 這張資料表要手動刪除</p>
+<p>或是直接刪除所有資料表 ( 推薦 )</p>
+<p><code>sail artisan db:wipe</code></p>
+<p>留下空的資料庫</p>
+<p><img src="/_resources/14c125769a354dfeb3f09a1418362443." /></p>
+<p>使用 sail mysql 指令匯入完整資料庫</p>
+<p><code>sail mysql -u sail -p password moi-gov-test &lt; ~/Desktop/__hicloud_moi_gov-2022_06_21_15_04_07-dump.sql</code></p>
+<p><img src="/_resources/e2a5ba11125041c698eb66fb62643ff5." /></p>
+<p>刷新，確認有成功匯入</p>
+<p><img src="/_resources/2c111bc043fa4d08a2902cf9015f5c7b." /></p>
+<hr />
+<p><strong>方法 2：使用加裝的 PhpMyAdmin 方式匯入</strong></p>
+<p>原本加裝的 phpmyadmin 只允許匯入 100 MB 的檔案大小</p>
+<p><img src="/_resources/1af5cf21c5734263b5672c9ce7b1ffe8." /></p>
+<p>但由正式機匯出的檔案有 469 MB</p>
+<p><img src="/_resources/4533da95eccb42de96af3f9f3171b168." /></p>
+<p>修改 phpmyadmin 允許上傳的大小</p>
+<p><img src="/_resources/933648c224a44041abe06bcc9d7fe4f0." /></p>
+<p>先把 sail 環境 down 掉，然後修改 phpmyadmin 允許上傳 1000 MB，重啟 sail 環境，進入 phpmyadmin</p>
+<p><img src="/_resources/37ba52fe7ecf43c2b6bae81442c7f01c." /></p>
+<p>匯入成功了</p>
+<p><img src="/_resources/f5fda544e42246db87f09ded10c20aaa." /></p>
+<p>可以在本機環境重現完整的資料量，看到故障的 Pagination 了</p>
+<p><img src="/_resources/3c492e08467341a581f75fa42dac8436." /></p>
+<hr />
+<p>⚠️ 注意 sail 中，並沒有 mysqldump 指令</p>
+<p><code>sail --help</code></p>
+<p>跟資料庫有關的就 mysql, mariadb, sql, redis 指令</p>
+<p><img src="/_resources/2a712264746648bba7d1f9c8fddca8fa." />
+<img src="/_resources/88d8fdc501d54c769db67ae14b3e2672." /></p>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Sail 的用法，以及孤立容器 orphan containers]]></title>
+            <guid>e104cfd576064c2a976d73c059f8cf45</guid>
+            <pubDate>Sun, 19 Jun 2022 00:42:36 GMT</pubDate>
+            <content:encoded><![CDATA[<p>日期：2022-06-19 ( 日 )</p>
+<hr />
+<p>使用 sail 方式啟動容器，並放在背景處理</p>
+<p><code>sail up -d</code></p>
+<p>出現警告訊息，說這個專案中有孤立容器的存在，可以透過參數 --remove-orphans 來清理</p>
+<p>WARN[0000] Found orphan containers ([l9-2022061501-mailhog-1 l9-2022061501-meilisearch-1 l9-2022061501-selenium-1]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.</p>
+<p>先把容器 stop 或 down 後 ( 這裡下錯了，其實我平常都用 stop )</p>
+<p><img src="/_resources/de98b01901254ae9a5c80d7a64aaa4b9." /></p>
+<p>再加參數重啟</p>
+<p><code>sail up -d --remove-orphans</code></p>
+<p>之後使用 up, down 就沒有</p>
+<p><img src="/_resources/c962849788d24644b41fd86d803c1cb8." /></p>
+<p>⚠️ 看起來只能用 up, down 每次啟動建立、關閉刪除容器，不然都會留下孤立容器</p>
+<p>在指令說明中除了 up 並沒有 start 指令</p>
+<p><img src="/_resources/d90485f1d6e14180a9fd03acbfe4b955." /></p>
+<p>用 stop 關閉，發現 start, restart 不能用</p>
+<p><img src="/_resources/c4c62dee37af46f6ab158fa7f4cdd680." /></p>
+<hr />
+<p>日期：2022-06-20 ( 一 )</p>
+<p>⚠️⚠️⚠️⚠️⚠️⚠️ 更正!!!</p>
+<p>使用 sail down 的話，資料庫會被清空</p>
+<p><img src="/_resources/4087c6624c3b47abb84f433137012a92." /></p>
+<p>所以還是照之前的 start, stop 參數</p>
+<p>然後要清除孤立容器 orphan containers 時，再另外用參數處理</p>
 ]]></content:encoded>
         </item>
     </channel>

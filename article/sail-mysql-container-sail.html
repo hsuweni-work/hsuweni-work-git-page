@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Sail 環境中，針對 MySQL Container 給 sail 用戶權限 - Hsu Weni Work</title>
+  </head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Hsu Weni Work</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Sail 環境中，針對 MySQL Container 給 sail 用戶權限</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1656296693000"
+                  >2022-06-27 10:24</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1656297016000"
+                  >2022-06-27 10:30</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">sail</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>日期：2022-06-27 ( 一 )</p>
+<p>正常來講 Sail 環境中裡的 MySQL 容器，裡面有一個 sail 用戶，只能操作自己的資料庫，無法新增其它資料庫，或更名資料庫等操作</p>
+<hr />
+<p>查看專案目前使用的 container</p>
+<p><img src="/_resources/19979a342bbf40bca69ee281a6a3931f." /></p>
+<p>進入 mysql 那個 container</p>
+<p><code>docker-compose exec mysql bash</code></p>
+<p><img src="/_resources/1b89229fcb4e49499f79493258bc2617." /></p>
+<p>參考 .env 設定檔</p>
+<p><img src="/_resources/a7fd80b675994335a976e876c981ff06." /></p>
+<p>猜測 root 和 sail 用戶的密碼都一樣為 .env 所設定的 password</p>
+<p><code>mysql -u root -p</code></p>
+<p><img src="/_resources/0376271763a74fabbd16df9bb078c8c3." /></p>
+<p>給 sail 用戶所有權限</p>
+<p><code>GRANT ALL PRIVILEGES ON *.* TO 'sail'@'%';</code></p>
+<p>刷新權限</p>
+<p><code>FLUSH PRIVILEGES;</code></p>
+<p>然後登出</p>
+<p>再使用 PHPMyAdmin 就可以進行資料庫新增、更名的動作了</p>
+</div>
+      </article>
+    </div>
+  </body>
+</html>

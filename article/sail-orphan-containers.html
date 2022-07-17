@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Sail 的用法，以及孤立容器 orphan containers - Hsu Weni Work</title>
+  </head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">Hsu Weni Work</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Sail 的用法，以及孤立容器 orphan containers</h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1655599356000"
+                  >2022-06-19 08:42</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1655770679000"
+                  >2022-06-21 08:17</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">sail</span>
+              
+              <span class="keyword">laravel</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p>日期：2022-06-19 ( 日 )</p>
+<hr />
+<p>使用 sail 方式啟動容器，並放在背景處理</p>
+<p><code>sail up -d</code></p>
+<p>出現警告訊息，說這個專案中有孤立容器的存在，可以透過參數 --remove-orphans 來清理</p>
+<p>WARN[0000] Found orphan containers ([l9-2022061501-mailhog-1 l9-2022061501-meilisearch-1 l9-2022061501-selenium-1]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.</p>
+<p>先把容器 stop 或 down 後 ( 這裡下錯了，其實我平常都用 stop )</p>
+<p><img src="/_resources/de98b01901254ae9a5c80d7a64aaa4b9." /></p>
+<p>再加參數重啟</p>
+<p><code>sail up -d --remove-orphans</code></p>
+<p>之後使用 up, down 就沒有</p>
+<p><img src="/_resources/c962849788d24644b41fd86d803c1cb8." /></p>
+<p>⚠️ 看起來只能用 up, down 每次啟動建立、關閉刪除容器，不然都會留下孤立容器</p>
+<p>在指令說明中除了 up 並沒有 start 指令</p>
+<p><img src="/_resources/d90485f1d6e14180a9fd03acbfe4b955." /></p>
+<p>用 stop 關閉，發現 start, restart 不能用</p>
+<p><img src="/_resources/c4c62dee37af46f6ab158fa7f4cdd680." /></p>
+<hr />
+<p>日期：2022-06-20 ( 一 )</p>
+<p>⚠️⚠️⚠️⚠️⚠️⚠️ 更正!!!</p>
+<p>使用 sail down 的話，資料庫會被清空</p>
+<p><img src="/_resources/4087c6624c3b47abb84f433137012a92." /></p>
+<p>所以還是照之前的 start, stop 參數</p>
+<p>然後要清除孤立容器 orphan containers 時，再另外用參數處理</p>
+</div>
+      </article>
+    </div>
+  </body>
+</html>
